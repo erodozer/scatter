@@ -27,8 +27,9 @@ func _ready() -> void:
 
 
 func _exit_tree():
-	_job_in_progress = false
-	job_completed.emit()
+	if _job_in_progress:
+		_job_in_progress = false
+		job_completed.emit()
 
 
 func execute(queries: Array) -> Array[Dictionary]:
