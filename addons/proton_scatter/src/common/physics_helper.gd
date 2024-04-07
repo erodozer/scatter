@@ -26,6 +26,11 @@ func _ready() -> void:
 	_is_ready = true
 
 
+func _exit_tree():
+	_job_in_progress = false
+	job_completed.emit()
+
+
 func execute(queries: Array) -> Array[Dictionary]:
 	if not _is_ready:
 		printerr("ProtonScatter error: Calling execute on a PhysicsHelper before it's ready, this should not happen.")
@@ -93,3 +98,5 @@ func _until(s: Signal, callable: Callable, physics := false) -> void:
 
 	while callable.call():
 		OS.delay_msec(delay)
+		if not is_inside_tree():
+			return
