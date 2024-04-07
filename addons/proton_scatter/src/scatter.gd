@@ -677,10 +677,10 @@ func _perform_sanity_check() -> void:
 	scatter_parent = scatter_parent
 
 
+# Remove output coming from the source node to avoid linked multimeshes or
+# other unwanted side effects
 func _on_node_duplicated() -> void:
-	# Force a full rebuild (which clears the existing outputs), otherwise we get
-	# linked multimeshes or other unwanted side effects
-	full_rebuild.call_deferred()
+	clear_output()
 
 
 func _on_child_exiting_tree(node: Node) -> void:
