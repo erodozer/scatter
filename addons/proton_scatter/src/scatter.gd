@@ -516,6 +516,7 @@ func _update_duplicates() -> void:
 
 			var t: Transform3D = item.process_transform(transforms.list[offset + i])
 			instance.transform = t
+			ProtonScatterUtil.set_visibility_layers(instance, item.visibility_layers)
 
 		# Delete the unused instances left in the pool if any
 		if count < child_count:
