@@ -307,7 +307,7 @@ func full_rebuild():
 func rebuild(force_discover := false) -> void:
 	update_gizmos()
 
-	if not is_inside_tree():
+	if not is_inside_tree() or not is_ready:
 		return
 
 	if is_thread_running():
