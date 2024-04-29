@@ -47,17 +47,7 @@ func get_value() -> NodePath:
 func _populate_tree() -> void:
 	_tree.clear()
 	var scene_root: Node = get_tree().get_edited_scene_root()
-	var editor_theme: Theme
-
-	if EditorInterface.has_method("get_editor_theme"):
-		editor_theme = EditorInterface.get_editor_theme()
-	else:
-		# 4.1 backward compatibility
-		var tmp = EditorPlugin.new() # TODO: check if this works in release builds
-		var gui: Control = tmp.get_editor_interface().get_base_control()
-		editor_theme = gui.get_theme()
-		tmp.queue_free()
-
+	var editor_theme: Theme = get_editor_theme()
 	_create_items_recursive(scene_root, null, editor_theme)
 
 
