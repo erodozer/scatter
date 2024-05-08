@@ -53,7 +53,6 @@ icon = ExtResource("2_j26xt")
 [node name="NewPresetDialog" type="ConfirmationDialog" parent="."]
 unique_name_in_owner = true
 title = "Create new preset"
-always_on_top = true
 
 [node name="MarginContainer" type="MarginContainer" parent="NewPresetDialog"]
 offset_left = 8.0
@@ -71,7 +70,6 @@ placeholder_text = "New preset name"
 unique_name_in_owner = true
 title = "Delete preset"
 size = Vector2i(250, 184)
-always_on_top = true
 ok_button_text = "Delete"
 dialog_autowrap = true
 
