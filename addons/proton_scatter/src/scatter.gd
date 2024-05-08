@@ -150,7 +150,6 @@ func _ready() -> void:
 
 
 func _exit_tree():
-	enabled = false
 	if is_thread_running():
 		modifier_stack.stop_update()
 		_thread.wait_to_finish()
