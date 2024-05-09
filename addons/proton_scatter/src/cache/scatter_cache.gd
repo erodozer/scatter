@@ -44,7 +44,7 @@ func _ready() -> void:
 
 	# Check if cache_file is empty, indicating the default case
 	if cache_file.is_empty():
-		if Editor.is_editor_hint():
+		if Engine.is_editor_hint():
 			# Ensure the cache folder exists
 			_ensure_cache_folder_exists()
 		else:
