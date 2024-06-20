@@ -1,4 +1,5 @@
 @tool
+class_name ScatterBaseModifier
 extends Resource
 
 # Modifiers place transforms. They create, edit or remove transforms in a list,
