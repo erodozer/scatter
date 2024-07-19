@@ -11,10 +11,13 @@ const ScatterUtil := preload('./common/scatter_util.gd')
 		proportion = val
 		ScatterUtil.request_parent_to_rebuild(self)
 
-@export_enum("From current scene:0", "From disk:1") var source = 1:
+@export var source_data: PackedScene :
 	set(val):
-		source = val
+		assert(val.instantiate() is Node3D, "scene resource must be derived from a Node3D object")
+		source_data = val
+		source_data_ready = false
 		property_list_changed.emit()
+		ScatterUtil.request_parent_to_rebuild(self)
 
 @export_group("Source options", "source_")
 @export var source_scale_multiplier := 1.0:
@@ -76,56 +79,18 @@ const ScatterUtil := preload('./common/scatter_util.gd')
 		lod_split_angle = val
 		ScatterUtil.request_parent_to_rebuild(self)
 
-var path: String:
-	set(val):
-		path = val
-		source_data_ready = false
-		_target_scene = load(path) if source != 0 else null
-		ScatterUtil.request_parent_to_rebuild(self)
-
 var source_position: Vector3
 var source_rotation: Vector3
 var source_scale: Vector3
 var source_data_ready := false
 
-var _target_scene: PackedScene
-
-
-func _get_property_list() -> Array:
-	var list := []
-
-	if source == 0:
-		list.push_back({
-			name = "path",
-			type = TYPE_NODE_PATH,
-		})
-	else:
-		list.push_back({
-			name = "path",
-			type = TYPE_STRING,
-			hint = PROPERTY_HINT_FILE,
-		})
-
-	return list
-
-
 func get_item() -> Node3D:
-	if path.is_empty():
+	if source_data == null:
 		return null
-
-	var node: Node3D
-
-	if source == 0 and has_node(path):
-		node = get_node(path).duplicate() # Never expose the original node
-	elif source == 1:
-		node = _target_scene.instantiate()
-
-	if node:
-		_save_source_data(node)
-		return node
-
-	return null
-
+	
+	var node: Node3D = source_data.instantiate()
+	_save_source_data(node)
+	return node
 
 # Takes a transform in input, scale it based on the local scale multiplier
 # If the source transform is not ignored, also copy the source position, rotation and scale.
